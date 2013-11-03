@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>OpenLayers</title>
+    <script type='text/javascript' src='js/OpenLayers.js'></script>
+    <script type='text/javascript' src='js/node_modules/proj4/dist/proj4.js'></script>
+    <script type='text/javascript'>
+      var map;
+      function init() {
+        map = new OpenLayers.Map('map_element', {
+          projection: 'EPSG:900913',
+          mapExtent: new OpenLayers.Bounds(-20037508, -20037508,
+            20037508, 20037508.34),
+          maxResolution: 156543.0339,
+          units: 'm'  
+        });
+        var wms = new OpenLayers.Layer.WMS(
+          'OSgeo',
+          'http://vmap0.tiles.osgeo.org/wms/vmap0',
+          {layers: 'basic'},
+          {}
+        );
+        map.addLayer(wms);
+        if( !map.getCenter() ) {
+          map.zoomToMaxExtent();
+        }
+      }
+    </script>
+    <style type='text/css'>
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      #map_element {
+        width:100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body onload='init();'>
+    <div id='map_element'></div>
+  </body>
+</html>
